@@ -4,10 +4,27 @@ class Manager:
         self.file_handler = file_handler
 
     def encrypt_text(self, text, rot_type):
-        pass
+        encrypted_text = ''
+        for char in text:
+            if char.isalpha():
+                ascii_offset = 65 if char.isupper() else 97
+                decrypted_char = chr((ord(char) - ascii_offset + rot_type) % 26 + ascii_offset)
+                encrypted_text += decrypted_char
+            else:
+                encrypted_text += char
+        return encrypted_text
+
 
     def decrypt_text(self, text, rot_type):
-        pass
+        decrypted_text = ''
+        for char in text:
+            if char.isalpha():
+                ascii_offset = 65 if char.isupper() else 97
+                decrypted_char = chr((ord(char) - ascii_offset - rot_type) % 26 + ascii_offset)
+                decrypted_text += decrypted_char
+            else:
+                decrypted_text += char
+        return decrypted_text
 
     def save_to_file(self, file_name, append=False):
         self.file_handler.write_to_file(file_name, self.buffer.data, append)
@@ -21,3 +38,6 @@ class Manager:
 
     def clear_buffer(self):
         self.buffer.clear_buffer()
+
+
+
