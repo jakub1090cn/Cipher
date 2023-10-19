@@ -1,6 +1,8 @@
 from src.file_handler import FileHandler
 from src.buffer import Buffer
 from rot import Rot
+from text import Text
+from dataclasses import asdict
 import os
 # TYPING.
 
@@ -22,9 +24,14 @@ class Manager:
     def save_to_file(self, file_name):
         file_name = f"{file_name}.json"
         if os.path.isfile(file_name):
-            self.file_handler.append_to_file(file_name, self.buffer.data)
+        #     self.file_handler.append_to_file(file_name, self.buffer.data)
+        # else:
+        #     self.file_handler.write_to_file(file_name, self.buffer.data)
+            data_to_write = [asdict(Text(item.text, item.rot_type, item.status)) for item in self.buffer.data]
+            self.file_handler.append_to_file(file_name, data_to_write)
         else:
-            self.file_handler.write_to_file(file_name, self.buffer.data)
+            data_to_write = [asdict(Text(item.text, item.rot_type, item.status)) for item in self.buffer.data]
+            self.file_handler.write_to_file(file_name, data_to_write)
 
     def load_from_file(self, file_name):
         self.buffer.clear_buffer()
@@ -52,14 +59,18 @@ class Manager:
                     rot_type = input('Enter type of encryption (rot13 or rot47): ')
                     rot = self.rot_type2rot(rot_type)
                     encrypted = Rot.encrypt_text(text, rot)
-                    self.buffer.add_text(encrypted)
+                    text_object = Text(text=encrypted, rot_type=rot_type, status='Encrypted')
+                    self.buffer.add_text(text_object)
                     print(encrypted)
+
 
                 case 2:
                     text = input('Enter text to decrypt: ')
                     rot_type = input('Enter type of decryption (rot13 or rot47): ')
                     rot = self.rot_type2rot(rot_type)
                     decrypted = Rot.decrypt_text(text, rot)
+                    text_object = Text(text=decrypted, rot_type=rot_type, status='Decrypted')
+                    self.buffer.add_text(text_object)
                     print(decrypted)
 
                 case 3:
