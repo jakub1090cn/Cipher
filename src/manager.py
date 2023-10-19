@@ -1,5 +1,7 @@
-from file_handler import FileHandler
-from buffer import Buffer
+from src.file_handler import FileHandler
+from src.buffer import Buffer
+from rot import Rot
+import os
 # TYPING.
 
 class Manager:
@@ -16,31 +18,13 @@ class Manager:
         }
 
 
-    def encrypt_text(self, text, rot):
-        encrypted_text = ''
-        for char in text:
-            if char.isalpha():
-                ascii_offset = 65 if char.isupper() else 97
-                encrypted_char = chr((ord(char) - ascii_offset + rot) % 26 + ascii_offset)
-                encrypted_text += encrypted_char
-            else:
-                encrypted_text += char
-        return encrypted_text
 
-
-    def decrypt_text(self, text, rot_type):
-        decrypted_text = ''
-        for char in text:
-            if char.isalpha():
-                ascii_offset = 65 if char.isupper() else 97
-                decrypted_char = chr((ord(char) - ascii_offset - rot_type) % 26 + ascii_offset)
-                decrypted_text += decrypted_char
-            else:
-                decrypted_text += char
-        return decrypted_text
-
-    def save_to_file(self, file_name, append=False):
-        self.file_handler.write_to_file(file_name, self.buffer.data, append)
+    def save_to_file(self, file_name):
+        file_name = f"{file_name}.json"
+        if os.path.isfile(file_name):
+            self.file_handler.append_to_file(file_name, self.buffer.data)
+        else:
+            self.file_handler.write_to_file(file_name, self.buffer.data)
 
     def load_from_file(self, file_name):
         self.buffer.clear_buffer()
@@ -67,7 +51,7 @@ class Manager:
                     text = input('Enter text to encrypt: ')
                     rot_type = input('Enter type of encryption (rot13 or rot47): ')
                     rot = self.rot_type2rot(rot_type)
-                    encrypted = self.encrypt_text(text, rot)
+                    encrypted = Rot.encrypt_text(text, rot)
                     self.buffer.add_text(encrypted)
                     print(encrypted)
 
@@ -75,21 +59,17 @@ class Manager:
                     text = input('Enter text to decrypt: ')
                     rot_type = input('Enter type of decryption (rot13 or rot47): ')
                     rot = self.rot_type2rot(rot_type)
-                    decrypted = self.decrypt_text(text, rot)
+                    decrypted = Rot.decrypt_text(text, rot)
                     print(decrypted)
 
                 case 3:
-                    file_name = input('Enter the file name to save to: ')
-                    append = input('Append to file? (y/n): ').lower() == 'y'
-                    self.save_to_file(file_name, append)
-
+                    file_name = input('Enter the file name to save to (without extensions): ')
+                    self.save_to_file(file_name)
                 case 4:
                     file_name = input('Enter the file name to load from: ')
                     self.load_from_file(file_name)
-
                 case 5:
                     self.clear_buffer()
-
                 case 6:
                     exit()
 
