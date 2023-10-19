@@ -1,4 +1,5 @@
 import json
+
 class FileHandler:
     @staticmethod
     def read_from_file(file_name):
