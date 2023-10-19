@@ -11,10 +11,16 @@ class FileHandler:
             print(f'File {file_name} not found.')
 
     @staticmethod
-    def write_to_file(file_name, data, append=False):
-        mode = 'a' if append else 'w'
-        with open(file_name, mode) as file:
-            json.dump(data, file, indent=4)
+    def write_to_file(file_name, data):
+        _data = {'data': data}
+        with open(file_name, 'w') as file:
+            json.dump(_data, file, indent=4)
+
+    @staticmethod
+    def append_to_file(file_name, data):
+        loaded_data = FileHandler.read_from_file(file_name)
+        new_data = loaded_data['data'] + data
+        FileHandler.write_to_file(file_name, new_data)
 
     @staticmethod
     def clear_file(file_name):
