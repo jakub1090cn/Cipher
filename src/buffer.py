@@ -2,15 +2,15 @@ class Buffer:
     def __init__(self):
         self.data = []
 
-    def add_text(self, text):
+    def add_text(self, text: str) -> None:
         self.data.append(text)
 
-    def save_to_file(self, file_name):
+    def save_to_file(self, file_name: str) -> None:
         with open(file_name, 'w') as file:
             for item in self.data:
                 file.write(f"{item}\n")
 
-    def load_from_file(self, file_name):
+    def load_from_file(self, file_name: str) -> None:
         with open(file_name, 'r') as file:
             lines = file.readlines()
             for line in lines:

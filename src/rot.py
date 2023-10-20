@@ -1,7 +1,7 @@
 
 class Rot:
     @staticmethod
-    def encrypt_text(text, rot):
+    def encrypt_text(text: str, rot: int) -> str:
         encrypted_text = ''
         for char in text:
             if char.isalpha():
@@ -13,7 +13,7 @@ class Rot:
         return encrypted_text
 
     @staticmethod
-    def decrypt_text(text, rot_type):
+    def decrypt_text(text: str, rot_type: int):
         decrypted_text = ''
         for char in text:
             if char.isalpha():

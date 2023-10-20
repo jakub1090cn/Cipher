@@ -6,6 +6,7 @@ from dataclasses import asdict
 import os
 # TYPING.
 
+
 class Manager:
     def __init__(self):
         self.buffer = Buffer()
@@ -19,9 +20,7 @@ class Manager:
             6: 'Exit'
         }
 
-
-
-    def save_to_file(self, file_name):
+    def save_to_file(self, file_name: str) -> None:
         file_name = f"{file_name}.json"
         if os.path.isfile(file_name):
         #     self.file_handler.append_to_file(file_name, self.buffer.data)
@@ -33,7 +32,7 @@ class Manager:
             data_to_write = [asdict(Text(item.text, item.rot_type, item.status)) for item in self.buffer.data]
             self.file_handler.write_to_file(file_name, data_to_write)
 
-    def load_from_file(self, file_name):
+    def load_from_file(self, file_name: str) -> None:
         self.buffer.clear_buffer()
         data = self.file_handler.read_from_file(file_name)
         if data:
@@ -44,7 +43,7 @@ class Manager:
         self.buffer.clear_buffer()
 
     @staticmethod
-    def rot_type2rot(rot_type):
+    def rot_type2rot(rot_type: str) -> int:
         rot_mapping = {'rot13': 13, 'rot47': 47}
         return rot_mapping.get(rot_type)
 

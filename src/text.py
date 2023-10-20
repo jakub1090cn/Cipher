@@ -1,4 +1,5 @@
-from dataclasses import dataclass
+
+from dataclasses import dataclass, asdict
 
 
 @dataclass
@@ -8,4 +9,4 @@ class Text:
     status: str
 
     def __str__(self):
-        return f'Text: {self.text}\nType: {self.rot_type}\n Status: {self.status}'
+        return asdict(f'Text: {self.text}\nType: {self.rot_type}\nStatus: {self.status}')
