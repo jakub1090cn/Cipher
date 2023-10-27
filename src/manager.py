@@ -2,7 +2,6 @@ from src.file_handler import FileHandler
 from src.buffer import Buffer
 from rot import Rot
 from text import Text
-from dataclasses import asdict
 import os
 # TYPING.
 
@@ -22,14 +21,10 @@ class Manager:
 
     def save_to_file(self, file_name: str) -> None:
         file_name = f"{file_name}.json"
+        data_to_write = self.buffer.convert_data_to_list_of_dicts()
         if os.path.isfile(file_name):
-        #     self.file_handler.append_to_file(file_name, self.buffer.data)
-        # else:
-        #     self.file_handler.write_to_file(file_name, self.buffer.data)
-            data_to_write = [asdict(Text(item.text, item.rot_type, item.status)) for item in self.buffer.data]
             self.file_handler.append_to_file(file_name, data_to_write)
         else:
-            data_to_write = [asdict(Text(item.text, item.rot_type, item.status)) for item in self.buffer.data]
             self.file_handler.write_to_file(file_name, data_to_write)
 
     def load_from_file(self, file_name: str) -> None:
