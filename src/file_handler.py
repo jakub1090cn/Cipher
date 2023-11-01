@@ -24,7 +24,7 @@ class FileHandler:
 
     @staticmethod
     def clear_file(file_name: str) -> None:
-        with open(file_name, 'w'):
-            pass
+        with open(file_name, 'w') as file:
+            json.dump({"data": ""}, file, indent=4)
 
 
