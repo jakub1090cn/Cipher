@@ -9,4 +9,4 @@ class Text:
     status: str
 
     def __str__(self):
-        return asdict(f'Text: {self.text}\nType: {self.rot_type}\nStatus: {self.status}')
+        return f'Text: {self.text}\nType: {self.rot_type}\nStatus: {self.status}'
