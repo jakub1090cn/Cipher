@@ -1,5 +1,5 @@
 # Content of Project
-* [General info])(#general-info)
+* [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [More detailed information about modules](#more-detailed-information-about-modules)
@@ -19,4 +19,4 @@
 ## Setup
 Clone the repo
 ```git clone https://github.com/jakub1090cn/Cipher.git```
-Run main.py```
+Run main.py
